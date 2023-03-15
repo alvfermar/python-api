@@ -1,0 +1,14 @@
+# Git
+.git*
+
+# Cache
+app/**/__pycache__/
+.mypy_cache/
+
+# Venv
+venv/
+
+# Other
+LICENSE
+*.md
+.pre-commit-config.yml
