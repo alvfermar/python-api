@@ -19,18 +19,37 @@ flake8-pyproject = "^1.2.2"
 mypy = "1.0.1"
 pre-commit = "^3.1.1"
 django-stubs = "^1.15.0"
+types-psycopg2 = "^2.9.21.8"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
+[tool.isort]
+skip = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".hg",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".svn",
+    ".tox",
+    ".venv",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "venv"
+]
+
 [tool.flake8]
 exclude = [
-    "venv",
-    "app/migrations",
-    "app/__pycache__",
-    "app/manage.py",
-    "app/settings.py"
+    "venv"
 ]
 max-line-length = 120
 
@@ -38,7 +57,4 @@ max-line-length = 120
 line-length = 120
 
 [tool.mypy]
-plugins = ["mypy_django_plugin.main"]
-
-# [tool.django-stubs]
-# django_settings_module = "app.settings"
+strict = true
