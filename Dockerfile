@@ -18,9 +18,16 @@ EXPOSE 8000
 RUN python -m venv $VIRTUAL_ENV
 # Actually enabling the venv
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
-RUN pip install --upgrade pip && \
+RUN \
+    # To install psycopg2
+    apk add --update --no-cache postgresql-client && \
+    apk add --update --no-cache --virtual .tmp-build-deps build-base postgresql-dev musl-dev && \
+    # Installing venv
+    pip install --upgrade pip && \
     pip install poetry && \
     poetry install && \
+    apk del .tmp-build-deps && \
+    # Adding new user
     adduser \
         --disabled-password \
         --no-create-home \
@@ -29,6 +36,3 @@ RUN pip install --upgrade pip && \
     chown -R django-user $HOME
 
 USER django-user
-
-
-# You need to use this to test and lint in your development environment as well. Start here!!
