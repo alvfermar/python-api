@@ -18,23 +18,32 @@ repos:
     - id: pretty-format-json
   - repo: local
     hooks:
+    # - id: django-tests
+    #   name: django-tests
+    #   entry: python app/manage.py test
+    #   language: python
+    #   types: [python]
     - id: isort
       name: isort
       entry: isort .
       language: python
-      files: python
+      types: [python]
+      pass_filenames: false
     - id: black
       name: black
       entry: black .
       language: python
-      files: python
+      types: [python]
+      pass_filenames: false
     - id: mypy
       name: mypy
       entry: mypy .
       language: python
-      files: python
+      types: [python]
+      pass_filenames: false
     - id: flake8
       name: flake8
       entry: flake8
       language: python
-      files: python
+      types: [python]
+      pass_filenames: false

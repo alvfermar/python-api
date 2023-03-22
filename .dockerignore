@@ -1,5 +1,5 @@
-# Git
-.git*
+# Git (we need the .gitignore file to run the pre-commit checks)
+.git
 
 # Cache
 app/**/__pycache__/

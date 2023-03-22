@@ -1,15 +1,19 @@
-FROM python:3.10.10-alpine3.17
+FROM python:3.10.10-slim-bullseye
 
 LABEL maintainer="el_datero"
 
 ENV PYTHONUNBUFFERED 1
 
 # Setting up folder structure
-ENV HOME=/home/django-user \
-    VIRTUAL_ENV=/$HOME/venv
-COPY ./pyproject.toml $HOME/pyproject.toml
-COPY ./app $HOME/app
-WORKDIR $HOME
+ENV HOME=/home/django-user
+ENV WORKDIR=$HOME/python-api
+ENV VIRTUAL_ENV=$WORKDIR/venv
+COPY ./pyproject.toml $WORKDIR/pyproject.toml
+COPY ./.pre-commit-config.yaml $WORKDIR/.pre-commit-config.yaml
+# Necessary for pre-commit to know where to look for
+COPY ./.gitignore $WORKDIR/.gitignore
+COPY ./app $WORKDIR/app
+WORKDIR $WORKDIR
 EXPOSE 8000
 
 # Creating the virtual environment and enabling it
@@ -20,13 +24,18 @@ RUN python -m venv $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 RUN \
     # To install psycopg2
-    apk add --update --no-cache postgresql-client && \
-    apk add --update --no-cache --virtual .tmp-build-deps build-base postgresql-dev musl-dev && \
+    apt-get -y update && \
+    apt-get install -y postgresql-client && \
+    apt-get install -y build-essential python3-dev libpq-dev && \
     # Installing venv
     pip install --upgrade pip && \
     pip install poetry && \
     poetry install && \
-    apk del .tmp-build-deps && \
+    # Installing git and pre-commit
+    apt-get install -y git && \
+    git init && git add . && \
+    pre-commit install && \
+    apt-get purge -y --auto-remove build-essential python3-dev libpq-dev && \
     # Adding new user
     adduser \
         --disabled-password \
