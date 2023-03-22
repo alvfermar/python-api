@@ -15,6 +15,6 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
       - name: Test
-        run: docker compose run --rm --build app sh -c "python app/manage.py test app/"
+        run: docker compose run --rm app sh -c "python app/manage.py test app/"
       - name: Lint
-        run: docker compose run --rm --build app sh -c "pre-commit run --all-files"
+        run: docker compose run --rm app sh -c "pre-commit run --all-files"

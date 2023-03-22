@@ -8,7 +8,7 @@ from psycopg2 import OperationalError as Pyscopg2Error
 class Command(BaseCommand):
     """Command to wait for the database to be ready"""
 
-    def handle(self) -> None:
+    def handle(self, *args, **options) -> None:  # type: ignore[no-untyped-def]
         """Entrypoint for the command"""
         self.stdout.write("Waiting for the database to be ready...")
         db_up: bool = False
