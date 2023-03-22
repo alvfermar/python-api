@@ -7,7 +7,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - "./app:/home/django-user/app"
+      - "./app:/home/django-user/python-api/app"
     command: >
       sh -c "python manage.py runserver 0.0.0.0:8000"
     environment:
@@ -19,7 +19,7 @@ services:
       - db
 
   db:
-    image: postgres:15.2-alpine
+    image: postgres:15.2-bullseye
     volumes:
       - dev-db-data:/var/lib/postgresql/data
     environment:

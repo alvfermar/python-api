@@ -18,11 +18,8 @@ repos:
     - id: pretty-format-json
   - repo: local
     hooks:
-    # - id: django-tests
-    #   name: django-tests
-    #   entry: python app/manage.py test
-    #   language: python
-    #   types: [python]
+    # Tests not included here since they rely on certain env vars present
+    # in the container. We will run it with Docker instead
     - id: isort
       name: isort
       entry: isort .
