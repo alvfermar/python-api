@@ -24,5 +24,7 @@ runs:
 
     - name: Install dependencies
       if: ${{ steps.cache-poetry.outputs.cache-hit != 'true' }}
-      shell: bash
       run: poetry install --only dev --no-interaction --no-root
+
+    - name: Source venv
+      run: source .venv/bin/activate
