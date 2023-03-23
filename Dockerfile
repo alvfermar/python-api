@@ -28,7 +28,7 @@ RUN \
     # Installing venv
     pip install --upgrade pip && \
     pip install poetry && \
-    poetry install && \
+    poetry install --without dev && \
     # Purging build packages
     apt-get purge -y --auto-remove build-essential python3-dev libpq-dev && \
     # Adding new user

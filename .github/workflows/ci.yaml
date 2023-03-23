@@ -17,6 +17,6 @@ jobs:
       - name: Django Tests
         run: docker compose run --rm app sh -c "python app/manage.py test app/"
       - name: Build dependencies for pre-commit
-        uses: ./.github/actions/setup
+        uses: ./.github/setup
       - name: Pre-commit checks
         uses: pre-commit/action@v3.0.0
