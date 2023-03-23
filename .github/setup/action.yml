@@ -27,6 +27,6 @@ runs:
       shell: bash
       run: poetry install --only dev --no-interaction --no-root
 
-    - name: Source venv
+    - name: Installing pre-commit hooks
       shell: bash
-      run: source .venv/bin/activate
+      run: pre-commit install
