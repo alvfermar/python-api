@@ -10,8 +10,6 @@ ENV WORKDIR=$HOME/python-api
 ENV VIRTUAL_ENV=$WORKDIR/venv
 COPY ./pyproject.toml $WORKDIR/pyproject.toml
 COPY ./.pre-commit-config.yaml $WORKDIR/.pre-commit-config.yaml
-# Necessary for pre-commit to know where to look for
-COPY ./.gitignore $WORKDIR/.gitignore
 COPY ./app $WORKDIR/app
 WORKDIR $WORKDIR
 EXPOSE 8000
@@ -31,10 +29,7 @@ RUN \
     pip install --upgrade pip && \
     pip install poetry && \
     poetry install && \
-    # Installing git and pre-commit
-    apt-get install -y git && \
-    git init && git add . && \
-    pre-commit install && \
+    # Purging build packages
     apt-get purge -y --auto-remove build-essential python3-dev libpq-dev && \
     # Adding new user
     adduser \
